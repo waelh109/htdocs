@@ -3,40 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Advanced Calculator</title>
+<title>Advanced Responsive Calculator</title>
 <style>
   /* Styling for the calculator */
   body {
     font-family: Arial, sans-serif;
     text-align: center;
     background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
   }
   .calculator {
-    max-width: 300px;
+    max-width: 400px;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid #ccc;
     background-color: #fff;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   }
-  input[type="text"] {
+  .calculator input[type="text"] {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    font-size: 18px;
+    padding: 15px;
+    font-size: 24px;
+    border: none;
+    text-align: right;
+    outline: none;
   }
-  button {
-    width: 50px;
-    height: 50px;
+  .calculator button {
+    width: 75px;
+    height: 75px;
     font-size: 18px;
-    margin: 2px;
+    margin: 5px;
     cursor: pointer;
     background-color: #eee;
     border: 1px solid #ccc;
     border-radius: 5px;
   }
-  button:hover {
+  .calculator button:hover {
     background-color: #ddd;
+  }
+  @media (max-width: 768px) {
+    .calculator {
+      max-width: 100%;
+      box-shadow: none;
+    }
   }
 </style>
 </head>
@@ -44,50 +53,35 @@
 <div class="calculator">
   <!-- Display area for calculator input and result -->
   <input type="text" id="result" disabled>
-  <!-- Table layout for calculator buttons -->
-  <table>
-    <!-- Row 1 -->
-    <tr>
-      <td><button onclick="appendSymbol('7')">7</button></td>
-      <td><button onclick="appendSymbol('8')">8</button></td>
-      <td><button onclick="appendSymbol('9')">9</button></td>
-      <td><button onclick="appendOperator('+')">+</button></td>
-    </tr>
-    <!-- Row 2 -->
-    <tr>
-      <td><button onclick="appendSymbol('4')">4</button></td>
-      <td><button onclick="appendSymbol('5')">5</button></td>
-      <td><button onclick="appendSymbol('6')">6</button></td>
-      <td><button onclick="appendOperator('-')">-</button></td>
-    </tr>
-    <!-- Row 3 -->
-    <tr>
-      <td><button onclick="appendSymbol('1')">1</button></td>
-      <td><button onclick="appendSymbol('2')">2</button></td>
-      <td><button onclick="appendSymbol('3')">3</button></td>
-      <td><button onclick="appendOperator('*')">*</button></td>
-    </tr>
-    <!-- Row 4 -->
-    <tr>
-      <td><button onclick="appendSymbol('0')">0</button></td>
-      <td><button onclick="clearInput()">C</button></td>
-      <td><button onclick="calculate()">=</button></td>
-      <td><button onclick="appendOperator('/')">/</button></td>
-    </tr>
-  </table>
+  <!-- Grid layout for calculator buttons -->
+  <div class="buttons">
+    <button onclick="appendSymbol('7')">7</button>
+    <button onclick="appendSymbol('8')">8</button>
+    <button onclick="appendSymbol('9')">9</button>
+    <button onclick="appendOperator('+')">+</button>
+    <button onclick="appendSymbol('4')">4</button>
+    <button onclick="appendSymbol('5')">5</button>
+    <button onclick="appendSymbol('6')">6</button>
+    <button onclick="appendOperator('-')">-</button>
+    <button onclick="appendSymbol('1')">1</button>
+    <button onclick="appendSymbol('2')">2</button>
+    <button onclick="appendSymbol('3')">3</button>
+    <button onclick="appendOperator('*')">*</button>
+    <button onclick="appendSymbol('0')">0</button>
+    <button onclick="clearInput()">C</button>
+    <button onclick="calculate()">=</button>
+    <button onclick="appendOperator('/')">/</button>
+  </div>
 </div>
 <script>
-  // Variables to store calculator state
   let currentInput = '';
   let currentOperator = '';
   
-  // Function to append symbols (digits) to the input
   function appendSymbol(symbol) {
     currentInput += symbol;
     document.getElementById('result').value = currentInput;
   }
   
-  // Function to append an operator to the input
   function appendOperator(operator) {
     if (currentInput !== '') {
       currentOperator = operator;
@@ -96,14 +90,12 @@
     }
   }
   
-  // Function to clear the input and operator
   function clearInput() {
     currentInput = '';
     currentOperator = '';
     document.getElementById('result').value = '';
   }
   
-  // Function to perform calculations
   function calculate() {
     if (currentInput !== '' && currentOperator !== '') {
       const parts = currentInput.split(currentOperator);

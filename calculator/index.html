@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced Calculator</title>
+<style>
+  /* Styling for the calculator */
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+  }
+  .calculator {
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+  button {
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+    margin: 2px;
+    cursor: pointer;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  button:hover {
+    background-color: #ddd;
+  }
+</style>
+</head>
+<body>
+<div class="calculator">
+  <!-- Display area for calculator input and result -->
+  <input type="text" id="result" disabled>
+  <!-- Table layout for calculator buttons -->
+  <table>
+    <!-- Row 1 -->
+    <tr>
+      <td><button onclick="appendSymbol('7')">7</button></td>
+      <td><button onclick="appendSymbol('8')">8</button></td>
+      <td><button onclick="appendSymbol('9')">9</button></td>
+      <td><button onclick="appendOperator('+')">+</button></td>
+    </tr>
+    <!-- Row 2 -->
+    <tr>
+      <td><button onclick="appendSymbol('4')">4</button></td>
+      <td><button onclick="appendSymbol('5')">5</button></td>
+      <td><button onclick="appendSymbol('6')">6</button></td>
+      <td><button onclick="appendOperator('-')">-</button></td>
+    </tr>
+    <!-- Row 3 -->
+    <tr>
+      <td><button onclick="appendSymbol('1')">1</button></td>
+      <td><button onclick="appendSymbol('2')">2</button></td>
+      <td><button onclick="appendSymbol('3')">3</button></td>
+      <td><button onclick="appendOperator('*')">*</button></td>
+    </tr>
+    <!-- Row 4 -->
+    <tr>
+      <td><button onclick="appendSymbol('0')">0</button></td>
+      <td><button onclick="clearInput()">C</button></td>
+      <td><button onclick="calculate()">=</button></td>
+      <td><button onclick="appendOperator('/')">/</button></td>
+    </tr>
+  </table>
+</div>
+<script>
+  // Variables to store calculator state
+  let currentInput = '';
+  let currentOperator = '';
+  
+  // Function to append symbols (digits) to the input
+  function appendSymbol(symbol) {
+    currentInput += symbol;
+    document.getElementById('result').value = currentInput;
+  }
+  
+  // Function to append an operator to the input
+  function appendOperator(operator) {
+    if (currentInput !== '') {
+      currentOperator = operator;
+      currentInput += operator;
+      document.getElementById('result').value = currentInput;
+    }
+  }
+  
+  // Function to clear the input and operator
+  function clearInput() {
+    currentInput = '';
+    currentOperator = '';
+    document.getElementById('result').value = '';
+  }
+  
+  // Function to perform calculations
+  function calculate() {
+    if (currentInput !== '' && currentOperator !== '') {
+      const parts = currentInput.split(currentOperator);
+      const num1 = parseFloat(parts[0]);
+      const num2 = parseFloat(parts[1]);
+      let result = 0;
+      switch (currentOperator) {
+        case '+':
+          result = num1 + num2;
+          break;
+        case '-':
+          result = num1 - num2;
+          break;
+        case '*':
+          result = num1 * num2;
+          break;
+        case '/':
+          result = num1 / num2;
+          break;
+      }
+      document.getElementById('result').value = result;
+      currentInput = result.toString();
+      currentOperator = '';
+    }
+  }
+</script>
+</body>
+</html>
